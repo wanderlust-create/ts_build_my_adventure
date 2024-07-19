@@ -11,7 +11,7 @@ function setupExpress() {
 }
 function startServer() {
     app.listen(9000, () => {
-        console.log("🎆 🚕 ✈️  Build My Adventuure REST API listening on port 9000 ✈️ 🚕 🎆");
+        console.log("🎆 🚕 ✈️  Build My Adventuure REST API listening at http://localhost:9000 ✈️ 🚕 🎆");
     });
 }
 setupExpress();
