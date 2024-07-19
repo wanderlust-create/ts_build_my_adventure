@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc",
+    "start-server": "node dist/app.js"
+  },
   "author": "",
   "license": "MIT",
   "devDependencies": {
