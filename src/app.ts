@@ -10,7 +10,7 @@ function setupExpress() {
 }
 
 function startServer() {
-  app.listen(9000, () => {
+  app.listen(port, () => {
     console.log(
       `🎆 🚕 ✈️  Build My Adventuure REST API listening at http://localhost:${config.PORT} ✈️ 🚕 🎆`
     );

@@ -12,7 +12,7 @@ function setupExpress() {
     app.route("/").get(root_1.root);
 }
 function startServer() {
-    app.listen(9000, () => {
+    app.listen(port, () => {
         console.log(`🎆 🚕 ✈️  Build My Adventuure REST API listening at http://localhost:${config_1.default.PORT} ✈️ 🚕 🎆`);
     });
 }
