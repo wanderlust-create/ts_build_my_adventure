@@ -1,8 +1,8 @@
 import { knexSnakeCaseMappers } from "objection";
 import type { Knex } from "knex";
 
-require("dotenv").config({ path: "../../.env" });
-
+// require("dotenv").config({ path: "../../.env" });
+// import * as dotenv from "dotenv";
 
 const config: { [key: string]: Knex.Config } = {
   development: {
@@ -51,4 +51,4 @@ const config: { [key: string]: Knex.Config } = {
   },
 };
 
-module.exports = config;
+export default config;
