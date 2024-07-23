@@ -10,7 +10,8 @@
     "start-dev-server": "tsc-watch --onSuccess \"node dist/app.js\"",
     "dev": "npm-run-all clean build start-dev-server",
     "migrate-make": "knex migrate:make init --knexfile ./src/config/knexfile.ts",
-    "migrate": "knex migrate:latest --knexfile ./src/config/knexfile.ts"
+    "migrate": "knex migrate:latest --knexfile ./src/config/knexfile.ts",
+    "seed-make": "knex seed:make dev --knexfile ./src/config/knexfile.ts"
   },
   "author": "",
   "license": "MIT",
