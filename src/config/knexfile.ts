@@ -1,15 +1,14 @@
 import { knexSnakeCaseMappers } from "objection";
 import type { Knex } from "knex";
 
-// require("dotenv").config({ path: "../../.env" });
-// import * as dotenv from "dotenv";
+require("dotenv").config({ path: "../../.env" });
 
 const config: { [key: string]: Knex.Config } = {
   development: {
     client: "postgresql",
     connection: {
       host: "localhost",
-      port: 5432,
+      port: 5433,
       database: process.env.DB_NAME,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
@@ -33,7 +32,7 @@ const config: { [key: string]: Knex.Config } = {
     client: "postgresql",
     connection: {
       host: "localhost",
-      port: 5432,
+      port: 5433,
       database: "adventure-life-test-db",
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
