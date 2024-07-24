@@ -1,23 +1,18 @@
-import express from "express";
-import { root } from "./routes/root";
+import createServer from "./loaders/server";
 import config from "./config";
-import logger from "./loaders/logger"
+import logger from "./loaders/logger";
+import dbSetup from "./loaders/dbSetup";
 
-const app = express();
 const port = config.PORT;
 
-function setupExpress() {
-  app.route("/").get(root);
-}
+const app = createServer();
 
-function startServer() {
-  app.listen(port, () => {
-    logger.info(
-      `🎆 🚕 ✈️  Build My Adventuure REST API listening at http://localhost:${config.PORT} ✈️ 🚕 🎆`
-    );
-  });
-}
+app.listen(port, async () => {
+  logger.info(
+    `🎆 🚕 ✈️  Build My Adventuure REST API listening at http://localhost:${config.PORT} ✈️ 🚕 🎆`
+  );
+  dbSetup();
+  logger.info("Database is connected");
+});
 
-setupExpress();
-
-startServer();
+export default app;
