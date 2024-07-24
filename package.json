@@ -19,6 +19,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@tsed/common": "^7.77.0",
     "@tsed/objection": "^7.77.0",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.11",
