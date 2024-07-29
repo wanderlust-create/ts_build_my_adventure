@@ -4,7 +4,7 @@ import cityDao from "../daos/city";
 
 export default {
   listAllCities,
-  // getCityById,
+  getCityById,
   // createCity,
   // updateCityById,
   // deleteCityById,

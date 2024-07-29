@@ -3,7 +3,7 @@ import City from "../models/city";
 
 export default {
   listAllCities,
-  // getCityById,
+  getCityById,
   // createCity,
   // updateCityById,
   // deleteCityById,

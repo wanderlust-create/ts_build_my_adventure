@@ -4,7 +4,7 @@ import CityService from "../services/city"
 
 export default {
   listAllCities,
-  // getCityById,
+  getCityById,
   // createCity,
   // updateCityById,
   // deleteCityById,
