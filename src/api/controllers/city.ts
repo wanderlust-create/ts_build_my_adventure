@@ -15,7 +15,6 @@ async function listAllCities(
   res: express.Response
 ): Promise<void> {
   logger.debug(`Entering GET All CONTROLLER - cities/ endpoint.`);
-  console.log(`Entering GET All CONTROLLER - cities/ endpoint.`);
   const cities = await CityService.listAllCities();
   try {
     if (!cities) {

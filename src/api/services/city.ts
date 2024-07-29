@@ -1,5 +1,6 @@
-import City from "../models/city"
-import cityDao from "../daos/city"
+import logger from "../../loaders/logger";
+import City from "../models/city";
+import cityDao from "../daos/city";
 
 export default {
   listAllCities,
@@ -10,5 +11,6 @@ export default {
 };
 
 function listAllCities() {
-  return cityDao.listAllCities()
+  logger.debug(`Entering GET All SERVICES - cities/ endpoint.`);
+  return cityDao.listAllCities();
 }

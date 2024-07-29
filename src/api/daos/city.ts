@@ -10,7 +10,7 @@ export default {
 };
 
 async function listAllCities(): Promise<City[]> {
-  logger.debug(`Entering GET DAO- cities/ endpoint.`);
+  logger.debug(`Entering GET ALL DAO- cities/ endpoint.`);
   return City.query()
     .column("id", "name", "country")
     .orderBy("created_at", "desc")
