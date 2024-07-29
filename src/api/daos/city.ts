@@ -6,7 +6,7 @@ export default {
   getCityById,
   createCity,
   updateCityById,
-  // deleteCityById,
+  deleteCityById,
 };
 
 async function listAllCities(): Promise<City[]> {
@@ -32,7 +32,7 @@ async function createCity(cityData: City): Promise<City> {
   return newCity;
 }
 async function updateCityById(cityId: string, cityData: City) {
-  logger.debug(`Entering UPDATE DAO- cities/:id endpoint ${cityData}`);
+  logger.debug(`Entering UPDATE BY ID DAO- cities/:id endpoint ${cityData}`);
   const updatedCity = await City.query()
     .findById(cityId)
     .patch({
@@ -41,4 +41,12 @@ async function updateCityById(cityId: string, cityData: City) {
     })
     .returning("*");
   return updatedCity;
+}
+async function deleteCityById(cityId: string) {
+  logger.debug(`Entering DELETE BY ID DAO- cities/ endpoint ${cityId}`);
+  const deletedCity = await City.query()
+    .delete()
+    .where({ id: cityId })
+    .returning("*");
+  return deletedCity;
 }

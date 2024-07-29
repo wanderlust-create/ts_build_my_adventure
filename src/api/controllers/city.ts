@@ -7,7 +7,7 @@ export default {
   getCityById,
   createCity,
   updateCityById,
-  // deleteCityById,
+  deleteCityById,
 };
 
 async function listAllCities(
@@ -82,5 +82,25 @@ async function updateCityById(
   } catch (err) {
     logger.error(err);
     res.status(500).send(err);
+  }
+}
+async function deleteCityById(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  logger.debug(`Entering DELETE CONTROLLER - cities/:id endpoint.`);
+  try {
+    const id = req.params.id;
+    const deletedCity = await CityService.deleteCityById(id);
+    if (deletedCity.length === 0) {
+      res.status(404).json({ error: "City not found" });
+      return;
+    } else {
+      logger.info("City Deleted:", deletedCity);
+      res.json({ alert: "City Deleted", deletedCity });
+    }
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json(err);
   }
 }

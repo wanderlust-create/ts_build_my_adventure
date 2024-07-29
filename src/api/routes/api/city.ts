@@ -9,4 +9,5 @@ export default (app: Router) => {
   route.get("/:id", CityController.getCityById);
   route.post("/", CityController.createCity);
   route.patch("/:id", CityController.updateCityById);
+  route.delete("/:id", CityController.deleteCityById);
 };

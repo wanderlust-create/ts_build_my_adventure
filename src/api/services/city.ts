@@ -7,7 +7,7 @@ export default {
   getCityById,
   createCity,
   updateCityById,
-  // deleteCityById,
+  deleteCityById,
 };
 
 function listAllCities() {
@@ -25,4 +25,8 @@ function createCity(cityData: City) {
 function updateCityById(cityId: string, cityData: City) {
   logger.debug(`Entering UPDATE SERVICES - cities/:id ${cityData}`);
   return cityDao.updateCityById(cityId, cityData);
+}
+function deleteCityById(cityId: string) {
+  logger.debug(`Entering DELETE SERVICES - cities/:id`);
+  return cityDao.deleteCityById(cityId);
 }
