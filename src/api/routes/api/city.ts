@@ -7,4 +7,5 @@ export default (app: Router) => {
   app.use("/cities", route);
   route.get("/", CityController.listAllCities);
   route.get("/:id", CityController.getCityById);
+  route.post("/", CityController.createCity);
 };

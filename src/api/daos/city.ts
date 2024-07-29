@@ -4,7 +4,7 @@ import City from "../models/city";
 export default {
   listAllCities,
   getCityById,
-  // createCity,
+  createCity,
   // updateCityById,
   // deleteCityById,
 };
@@ -18,9 +18,17 @@ async function listAllCities(): Promise<City[]> {
 }
 
 async function getCityById(cityId: string): Promise<City> {
-  logger.debug(`Entering GET BY ID DAO- cities/ endpoint ${cityId}`);
+  logger.debug(`Entering GET BY ID DAO- cities/:id endpoint ${cityId}`);
   return City.query()
     .findById(cityId)
     .column("id", "name", "country")
     // .withGraphFetched("event");
+}
+async function createCity(cityData: City): Promise<City> {
+  logger.debug(`Entering CREATE DAO- cities/ endpoint ${cityData}`);
+  const newCity = await City.query().insert({
+    name: cityData.name,
+    country: cityData.country,
+  })
+  return newCity;
 }
