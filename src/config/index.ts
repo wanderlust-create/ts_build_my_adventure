@@ -1,25 +1,20 @@
 import * as dotenv from "dotenv";
 import { isInteger } from "./utils";
 
-// Set the default NODE_ENV to 'development'
+// Set the NODE_ENV to 'development' by default
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
-// load .env File
+// load .env file
 const envFound = dotenv.config();
 if (!envFound) {
   throw new Error("⚠️Could not find .env file⚠️");
 }
 
+// check that process.env.PORT is an integer
 const findPORT = function () {
+  const portArg = process.env.PORT;
   let port: number;
-  const portEnv = process.env.PORT,
-    portArg = process.argv[2]
-    // first look for port num in .env file
-  if (isInteger(portEnv)) {
-    port = parseInt(portEnv);
-  }
-  // then look for a comand line arg
-  if (!port && isInteger(portArg)) {
+  if (isInteger(portArg)) {
     port = parseInt(portArg);
   }
   if (!port) {
@@ -32,6 +27,14 @@ const findPORT = function () {
 const port = findPORT();
 
 export default {
+  DB_NAME: process.env.DB_NAME,
+  TEST_DB_NAME: process.env.TEST_DB_NAME,
+  DB_PASSWORD: process.env.DB_PASSWORD,
+  DB_USER: process.env.DB_USER,
+  LOG_LEVEL: process.env.LOG_LEVEL || "silly",
   PORT: port,
   NODE_ENV: process.env.NODE_ENV,
+  API: {
+    PREFIX: "/api/v1",
+  },
 };
