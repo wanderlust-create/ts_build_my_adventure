@@ -6,7 +6,7 @@ export default {
   listAllCities,
   getCityById,
   createCity,
-  // updateCityById,
+  updateCityById,
   // deleteCityById,
 };
 
@@ -59,6 +59,25 @@ async function createCity(
       return;
     } else {
       res.json(newCity);
+    }
+  } catch (err) {
+    logger.error(err);
+    res.status(500).send(err);
+  }
+}
+async function updateCityById(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  logger.debug(`Entering UPDATE CONTROLLER - cities/:id endpoint.`);
+  const id = req.params.id;
+  const updatedCity= await CityService.updateCityById(id, req.body)
+  try {
+    if (!updatedCity) {
+      res.status(404).json({ error: "City not updated" });
+      return;
+    } else {
+      res.json(updatedCity);
     }
   } catch (err) {
     logger.error(err);

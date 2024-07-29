@@ -5,7 +5,7 @@ export default {
   listAllCities,
   getCityById,
   createCity,
-  // updateCityById,
+  updateCityById,
   // deleteCityById,
 };
 
@@ -16,7 +16,6 @@ async function listAllCities(): Promise<City[]> {
     .orderBy("created_at", "desc");
   // .withGraphFetched("event");
 }
-
 async function getCityById(cityId: string): Promise<City> {
   logger.debug(`Entering GET BY ID DAO- cities/:id endpoint ${cityId}`);
   return City.query()
@@ -31,4 +30,15 @@ async function createCity(cityData: City): Promise<City> {
     country: cityData.country,
   })
   return newCity;
+}
+async function updateCityById(cityId: string, cityData: City) {
+  logger.debug(`Entering UPDATE DAO- cities/:id endpoint ${cityData}`);
+  const updatedCity = await City.query()
+    .findById(cityId)
+    .patch({
+      name: cityData.name,
+      country: cityData.country,
+    })
+    .returning("*");
+  return updatedCity;
 }
