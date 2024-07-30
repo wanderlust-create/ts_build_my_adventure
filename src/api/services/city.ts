@@ -1,6 +1,6 @@
 import logger from "../../loaders/logger";
 import City from "../models/city";
-import cityDao from "../daos/city";
+import CityDao from "../daos/city";
 
 export default {
   listAllCities,
@@ -10,23 +10,23 @@ export default {
   deleteCityById,
 };
 
-function listAllCities() {
+function listAllCities(): Promise<City[]> {
   logger.debug(`Entering GET All SERVICES - cities/ endpoint.`);
-  return cityDao.listAllCities();
+  return CityDao.listAllCities();
 }
-function getCityById(cityId: string) {
+function getCityById(cityId: string): Promise<City> {
   logger.debug(`Entering GET BY ID SERVICES - cities/:id endpoint ${cityId}.`);
-  return cityDao.getCityById(cityId);
+  return CityDao.getCityById(cityId);
 }
-function createCity(cityData: City) {
+function createCity(cityData: City): Promise<City> {
   logger.debug(`Entering CREATE SERVICES - cities/ endpoint ${cityData}`);
-  return cityDao.createCity(cityData);
+  return CityDao.createCity(cityData);
 }
-function updateCityById(cityId: string, cityData: City) {
+function updateCityById(cityId: string, cityData: City): Promise<City[]> {
   logger.debug(`Entering UPDATE BY ID SERVICES - cities/:id ${cityData}`);
-  return cityDao.updateCityById(cityId, cityData);
+  return CityDao.updateCityById(cityId, cityData);
 }
-function deleteCityById(cityId: string) {
+function deleteCityById(cityId: string): Promise<City[]> {
   logger.debug(`Entering DELETE BY ID SERVICES - cities/:id`);
-  return cityDao.deleteCityById(cityId);
+  return CityDao.deleteCityById(cityId);
 }

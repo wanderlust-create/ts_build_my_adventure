@@ -32,10 +32,7 @@ async function createUser(userData: User): Promise<User> {
   });
   return newUser;
 }
-async function updateUserById(
-  userId: string,
-  userData: User
-): Promise<User[]> {
+async function updateUserById(userId: string, userData: User): Promise<User[]> {
   logger.debug(`Entering UPDATE BY ID DAO- users/:id endpoint ${userData}`);
   const updatedUser = await User.query()
     .findById(userId)

@@ -71,7 +71,7 @@ async function createCity(
 async function updateCityById(
   req: express.Request,
   res: express.Response
-): Promise<City> {
+): Promise<City[]> {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - cities/:id endpoint.`);
   const id = req.params.id;
   const updatedCity = await CityService.updateCityById(id, req.body);
@@ -91,13 +91,13 @@ async function updateCityById(
 async function deleteCityById(
   req: express.Request,
   res: express.Response
-): Promise<City> {
+): Promise<City[]> {
   logger.debug(`Entering DELETE BY ID CONTROLLER - cities/:id endpoint.`);
   try {
     const id = req.params.id;
     const deletedCity = await CityService.deleteCityById(id);
     if (deletedCity.length === 0) {
-      res.status(404).json({ error: "City not found" });
+      res.status(404).json({ error: "City not deleted" });
       return;
     } else {
       logger.info("City Deleted:", deletedCity);
