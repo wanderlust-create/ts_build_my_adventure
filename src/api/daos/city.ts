@@ -13,15 +13,15 @@ async function listAllCities(): Promise<City[]> {
   logger.debug(`Entering GET ALL DAO- cities/ endpoint.`);
   return City.query()
     .column("id", "name", "country")
-    .orderBy("created_at", "desc");
-  // .withGraphFetched("event");
+    .orderBy("created_at", "desc")
+    .withGraphFetched("event");
 }
 async function getCityById(cityId: string): Promise<City> {
   logger.debug(`Entering GET BY ID DAO- cities/:id endpoint ${cityId}`);
   return City.query()
     .findById(cityId)
     .column("id", "name", "country")
-    // .withGraphFetched("event");
+    .withGraphFetched("event");
 }
 async function createCity(cityData: City): Promise<City> {
   logger.debug(`Entering CREATE DAO- cities/ endpoint ${cityData}`);
