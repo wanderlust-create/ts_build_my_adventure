@@ -8,14 +8,14 @@ export default {
 };
 
 async function listAllUserCities(): Promise<UserCity[]> {
-  logger.debug(`Entering GET ALL DAO- userCities/ endpoint.`);
+  logger.debug(`Entering GET ALL DAO- user-cities/ endpoint.`);
   return UserCity.query()
     .column("id", "userId", "cityId")
     .orderBy("created_at", "desc");
 }
 
 async function createUserCity(userCityData: UserCity): Promise<UserCity> {
-  logger.debug(`Entering CREATE DAO- userCities/ endpoint ${userCityData}`);
+  logger.debug(`Entering CREATE DAO- user-cities/ endpoint ${userCityData}`);
   const newUserCity = await UserCity.query().insert({
     userId: userCityData.userId,
     cityId: userCityData.cityId,
@@ -25,7 +25,7 @@ async function createUserCity(userCityData: UserCity): Promise<UserCity> {
 
 async function deleteUserCityById(userCityId: string): Promise<UserCity[]> {
   logger.debug(
-    `Entering DELETE BY ID DAO- userCities/:id endpoint ${userCityId}`
+    `Entering DELETE BY ID DAO- user-cities/:id endpoint ${userCityId}`
   );
   const deletedUserCity = await UserCity.query()
     .delete()

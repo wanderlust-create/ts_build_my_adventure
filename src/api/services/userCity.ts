@@ -8,15 +8,17 @@ export default {
   deleteUserCityById,
 };
 
-function listAllUserCities() {
-  logger.debug(`Entering GET All SERVICES - userCities/ endpoint.`);
+function listAllUserCities(): Promise<UserCity[]> {
+  logger.debug(`Entering GET All SERVICES - user-cities/ endpoint.`);
   return UserCityDao.listAllUserCities();
 }
-function createUserCity(userCityData: UserCity) {
-  logger.debug(`Entering CREATE SERVICES - userCities/ endpoint ${userCityData}`);
+function createUserCity(userCityData: UserCity): Promise<UserCity> {
+  logger.debug(
+    `Entering CREATE SERVICES -user-cities/ endpoint ${userCityData}`
+  );
   return UserCityDao.createUserCity(userCityData);
 }
-function deleteUserCityById(userCityId: string) {
-  logger.debug(`Entering DELETE BY ID SERVICES - userCities/:id`);
+function deleteUserCityById(userCityId: string): Promise<UserCity[]> {
+  logger.debug(`Entering DELETE BY ID SERVICES - user-cities/:id`);
   return UserCityDao.deleteUserCityById(userCityId);
 }
