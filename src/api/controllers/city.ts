@@ -1,5 +1,6 @@
 import * as express from "express";
 import logger from "../../loaders/logger";
+import City from "../models/city";
 import CityService from "../services/city";
 
 export default {
@@ -13,7 +14,7 @@ export default {
 async function listAllCities(
   req: express.Request,
   res: express.Response
-): Promise<void> {
+): Promise<City[]> {
   logger.debug(`Entering GET All CONTROLLER - cities/ endpoint.`);
   const cities = await CityService.listAllCities();
   try {
@@ -32,7 +33,7 @@ async function listAllCities(
 async function getCityById(
   req: express.Request,
   res: express.Response
-): Promise<void> {
+): Promise<City> {
   logger.debug(`Entering GET BY ID CONTROLLER - cities/:id endpoint.`);
   const city = await CityService.getCityById(req.params.id);
   try {
@@ -47,10 +48,11 @@ async function getCityById(
     res.status(500).send(err);
   }
 }
+
 async function createCity(
   req: express.Request,
   res: express.Response
-): Promise<void> {
+): Promise<City> {
   logger.debug(`Entering CREATE CONTROLLER - cities/ endpoint.`);
   const newCity = await CityService.createCity(req.body);
   try {
@@ -65,13 +67,14 @@ async function createCity(
     res.status(500).send(err);
   }
 }
+
 async function updateCityById(
   req: express.Request,
   res: express.Response
-): Promise<void> {
-  logger.debug(`Entering UPDATE CONTROLLER - cities/:id endpoint.`);
+): Promise<City> {
+  logger.debug(`Entering UPDATE BY ID CONTROLLER - cities/:id endpoint.`);
   const id = req.params.id;
-  const updatedCity= await CityService.updateCityById(id, req.body)
+  const updatedCity = await CityService.updateCityById(id, req.body);
   try {
     if (!updatedCity) {
       res.status(404).json({ error: "City not updated" });
@@ -84,11 +87,12 @@ async function updateCityById(
     res.status(500).send(err);
   }
 }
+
 async function deleteCityById(
   req: express.Request,
   res: express.Response
-): Promise<void> {
-  logger.debug(`Entering DELETE CONTROLLER - cities/:id endpoint.`);
+): Promise<City> {
+  logger.debug(`Entering DELETE BY ID CONTROLLER - cities/:id endpoint.`);
   try {
     const id = req.params.id;
     const deletedCity = await CityService.deleteCityById(id);

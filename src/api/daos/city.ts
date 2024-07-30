@@ -31,7 +31,7 @@ async function createCity(cityData: City): Promise<City> {
   })
   return newCity;
 }
-async function updateCityById(cityId: string, cityData: City) {
+async function updateCityById(cityId: string, cityData: City): Promise<City[]> {
   logger.debug(`Entering UPDATE BY ID DAO- cities/:id endpoint ${cityData}`);
   const updatedCity = await City.query()
     .findById(cityId)
@@ -42,8 +42,8 @@ async function updateCityById(cityId: string, cityData: City) {
     .returning("*");
   return updatedCity;
 }
-async function deleteCityById(cityId: string) {
-  logger.debug(`Entering DELETE BY ID DAO- cities/ endpoint ${cityId}`);
+async function deleteCityById(cityId: string): Promise<City[]> {
+  logger.debug(`Entering DELETE BY ID DAO- cities/:id endpoint ${cityId}`);
   const deletedCity = await City.query()
     .delete()
     .where({ id: cityId })
