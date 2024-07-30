@@ -1,7 +1,7 @@
 import createServer from "./loaders/server";
 import config from "./config";
-import logger from "./loaders/logger";
 import dbSetup from "./loaders/dbSetup";
+import logger from "./loaders/logger";
 
 const port = config.PORT;
 
