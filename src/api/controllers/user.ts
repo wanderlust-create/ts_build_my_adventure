@@ -10,7 +10,6 @@ export default {
   updateUserById,
   deleteUserById,
 };
-
 async function listAllUsers(
   req: express.Request,
   res: express.Response
@@ -29,7 +28,6 @@ async function listAllUsers(
     res.status(500).send(err);
   }
 }
-
 async function getUserById(
   req: express.Request,
   res: express.Response
@@ -48,7 +46,6 @@ async function getUserById(
     res.status(500).send(err);
   }
 }
-
 async function createUser(
   req: express.Request,
   res: express.Response
@@ -67,11 +64,10 @@ async function createUser(
     res.status(500).send(err);
   }
 }
-
 async function updateUserById(
   req: express.Request,
   res: express.Response
-): Promise<User> {
+): Promise<User[]> {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - users/:id endpoint.`);
   const id = req.params.id;
   const updatedUser = await UserService.updateUserById(id, req.body);
@@ -87,17 +83,16 @@ async function updateUserById(
     res.status(500).send(err);
   }
 }
-
 async function deleteUserById(
   req: express.Request,
   res: express.Response
-): Promise<User> {
+): Promise<User[]> {
   logger.debug(`Entering DELETE BY ID CONTROLLER - users/:id endpoint.`);
   try {
     const id = req.params.id;
     const deletedUser = await UserService.deleteUserById(id);
     if (deletedUser.length === 0) {
-      res.status(404).json({ error: "User not found" });
+      res.status(404).json({ error: "User not deleted" });
       return;
     } else {
       logger.info("User Deleted:", deletedUser);
