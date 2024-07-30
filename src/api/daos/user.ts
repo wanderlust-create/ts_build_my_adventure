@@ -1,4 +1,3 @@
-import { count } from "console";
 import logger from "../../loaders/logger";
 import User from "../models/user";
 
@@ -45,7 +44,7 @@ async function updateUserById(userId: string, userData: User): Promise<User[]> {
     .returning("*");
   return updatedUser;
 }
-async function deleteUserById(userId: string): Promise<User> {
+async function deleteUserById(userId: string): Promise<User[]> {
   logger.debug(`Entering DELETE BY ID DAO- users/:id endpoint ${userId}`);
   const deletedUser = await User.query()
     .delete()
