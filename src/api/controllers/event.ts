@@ -2,6 +2,7 @@ import * as express from "express";
 import logger from "../../loaders/logger";
 import Event from "../models/event";
 import EventService from "../services/event";
+import User from "../models/user";
 
 export default {
   listAllEvents,
@@ -14,12 +15,22 @@ export default {
 async function listAllEvents(
   req: express.Request,
   res: express.Response
-): Promise<Event[]> {
+): Promise<Event[]| User> {
   logger.debug(`Entering GET All CONTROLLER - events/ endpoint.`);
-  const events = await EventService.listAllEvents();
+  type ReturnValue = User | Event[];
+  let events: ReturnValue = [];
+  if (req.query.cityId) {
+    let cityId = req.query.cityId as string;
+    events = await EventService.filterEventsByCityId(cityId);
+  } else if (req.query.userId) {
+    let userId = req.query.userId as string;
+    events = await EventService.filterEventsByUserId(userId);
+  } else {
+    events = await EventService.listAllEvents();
+  }
   try {
     if (!events) {
-      res.status(404).json({ error: "No events found" });
+      res.status(404).json({ error: `No events found` });
       return;
     } else {
       res.json(events);

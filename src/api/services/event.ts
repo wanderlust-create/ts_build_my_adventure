@@ -1,9 +1,12 @@
 import logger from "../../loaders/logger";
 import Event from "../models/event";
+import User from "../models/user";
 import EventDao from "../daos/event";
 
 export default {
   listAllEvents,
+  filterEventsByCityId,
+  filterEventsByUserId,
   getEventById,
   createEvent,
   updateEventById,
@@ -11,22 +14,34 @@ export default {
 };
 
 function listAllEvents(): Promise<Event[]> {
-  logger.debug(`Entering GET All SERVICES - events/ endpoint.`);
+  logger.debug(`Entering GET All SERVICE - events/ endpoint.`);
   return EventDao.listAllEvents();
 }
+function filterEventsByCityId(cityId: string): Promise<Event[]> {
+  logger.debug(
+    `Entering FILTER EVENTS BY CITYID SERVICE - events?cityId=${cityId} endpoint.`
+  );
+  return EventDao.filterEventsByCityId(cityId);
+}
+function filterEventsByUserId(userId: string): Promise<User> {
+  logger.debug(
+    `Entering FILTER EVENTS BY USERID SERVICE - events?userId=${userId} endpoint.`
+  );
+  return EventDao.filterEventsByUserId(userId);
+}
 function getEventById(eventId: string): Promise<Event> {
-  logger.debug(`Entering GET BY ID SERVICES - events/:id endpoint ${eventId}.`);
+  logger.debug(`Entering GET BY ID SERVICE - events/:id endpoint ${eventId}.`);
   return EventDao.getEventById(eventId);
 }
 function createEvent(eventData: Event): Promise<Event> {
-  logger.debug(`Entering CREATE SERVICES - events/ endpoint ${eventData}`);
+  logger.debug(`Entering CREATE SERVICE - events/ endpoint ${eventData}`);
   return EventDao.createEvent(eventData);
 }
 function updateEventById(eventId: string, eventData: Event): Promise<Event[]> {
-  logger.debug(`Entering UPDATE BY ID SERVICES - events/:id ${eventData}`);
+  logger.debug(`Entering UPDATE BY ID SERVICE - events/:id ${eventData}`);
   return EventDao.updateEventById(eventId, eventData);
 }
 function deleteEventById(eventId: string): Promise<Event[]> {
-  logger.debug(`Entering DELETE BY ID SERVICES - events/:id`);
+  logger.debug(`Entering DELETE BY ID SERVICE - events/:id`);
   return EventDao.deleteEventById(eventId);
 }

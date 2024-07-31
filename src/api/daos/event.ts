@@ -1,8 +1,11 @@
 import logger from "../../loaders/logger";
 import Event from "../models/event";
+import User from "../models/user"
 
 export default {
   listAllEvents,
+  filterEventsByCityId,
+  filterEventsByUserId,
   getEventById,
   createEvent,
   updateEventById,
@@ -15,6 +18,21 @@ async function listAllEvents(): Promise<Event[]> {
     .column("id", "title")
     .orderBy("created_at", "desc")
     .withGraphFetched("city");
+}
+async function filterEventsByCityId(cityId: string): Promise<Event[]> {
+  logger.debug(
+    `Entering FILTER EVENTS BY CITYID DAO- events?cityId=${cityId} endpoint.`
+  );
+  return Event.query().select("id", "title", "cityId").where("cityId", cityId)
+}
+async function filterEventsByUserId(userId: string): Promise<User> {
+  logger.debug(
+    `Entering FILTER EVENTS BY USERID DAO- events?userId=${userId} endpoint.`
+  );
+    return User.query()
+      .findById(userId)
+      .column("id", "firstName", "lastName")
+      .withGraphFetched("[city.[event]]");
 }
 async function getEventById(eventId: string): Promise<Event> {
   logger.debug(`Entering GET BY ID DAO- events/:id endpoint ${eventId}`);
