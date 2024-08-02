@@ -10,10 +10,7 @@ export default {
   updateUserById,
   deleteUserById,
 };
-async function listAllUsers(
-  req: express.Request,
-  res: express.Response
-): Promise<User[]> {
+async function listAllUsers(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET All CONTROLLER - users/ endpoint.`);
   const users = await UserService.listAllUsers();
   try {
@@ -28,10 +25,7 @@ async function listAllUsers(
     res.status(500).send(err);
   }
 }
-async function getUserById(
-  req: express.Request,
-  res: express.Response
-): Promise<User> {
+async function getUserById(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET BY ID CONTROLLER - users/:id endpoint.`);
   const user = await UserService.getUserById(req.params.id);
   try {
@@ -46,10 +40,7 @@ async function getUserById(
     res.status(500).send(err);
   }
 }
-async function createUser(
-  req: express.Request,
-  res: express.Response
-): Promise<User> {
+async function createUser(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - users/ endpoint.`);
   const newUser = await UserService.createUser(req.body);
   try {
@@ -64,10 +55,7 @@ async function createUser(
     res.status(500).send(err);
   }
 }
-async function updateUserById(
-  req: express.Request,
-  res: express.Response
-): Promise<User[]> {
+async function updateUserById(req: express.Request, res: express.Response) {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - users/:id endpoint.`);
   const id = req.params.id;
   const updatedUser = await UserService.updateUserById(id, req.body);
@@ -83,10 +71,7 @@ async function updateUserById(
     res.status(500).send(err);
   }
 }
-async function deleteUserById(
-  req: express.Request,
-  res: express.Response
-): Promise<User[]> {
+async function deleteUserById(req: express.Request, res: express.Response) {
   logger.debug(`Entering DELETE BY ID CONTROLLER - users/:id endpoint.`);
   try {
     const id = req.params.id;
