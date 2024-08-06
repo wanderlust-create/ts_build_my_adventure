@@ -8,10 +8,7 @@ export default {
   createUserCity,
   deleteUserCityById,
 };
-async function listAllUserCities(
-  req: express.Request,
-  res: express.Response
-): Promise<UserCity[]> {
+async function listAllUserCities(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET All CONTROLLER - user-cities/ endpoint.`);
   const userCities = await UserCityService.listAllUserCities();
   try {
@@ -26,10 +23,7 @@ async function listAllUserCities(
     res.status(500).send(err);
   }
 }
-async function createUserCity(
-  req: express.Request,
-  res: express.Response
-): Promise<UserCity> {
+async function createUserCity(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - user-cities/ endpoint.`);
   const newUserCity = await UserCityService.createUserCity(req.body);
   try {
@@ -44,10 +38,7 @@ async function createUserCity(
     res.status(500).send(err);
   }
 }
-async function deleteUserCityById(
-  req: express.Request,
-  res: express.Response
-): Promise<UserCity[]> {
+async function deleteUserCityById(req: express.Request, res: express.Response) {
   logger.debug(`Entering DELETE BY ID CONTROLLER - user-cities/:id endpoint.`);
   try {
     const id = req.params.id;

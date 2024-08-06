@@ -12,10 +12,7 @@ export default {
   deleteEventById,
 };
 
-async function listAllEvents(
-  req: express.Request,
-  res: express.Response
-): Promise<Event[]| User> {
+async function listAllEvents(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET All CONTROLLER - events/ endpoint.`);
   type ReturnValue = User | Event[];
   let events: ReturnValue = [];
@@ -40,10 +37,7 @@ async function listAllEvents(
     res.status(500).send(err);
   }
 }
-async function getEventById(
-  req: express.Request,
-  res: express.Response
-): Promise<Event> {
+async function getEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET BY ID CONTROLLER - events/:id endpoint.`);
   const event = await EventService.getEventById(req.params.id);
   try {
@@ -58,10 +52,7 @@ async function getEventById(
     res.status(500).send(err);
   }
 }
-async function createEvent(
-  req: express.Request,
-  res: express.Response
-): Promise<Event> {
+async function createEvent(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - events/ endpoint.`);
   const newEvent = await EventService.createEvent(req.body);
   try {
@@ -76,10 +67,7 @@ async function createEvent(
     res.status(500).send(err);
   }
 }
-async function updateEventById(
-  req: express.Request,
-  res: express.Response
-): Promise<Event[]> {
+async function updateEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - events/:id endpoint.`);
   const id = req.params.id;
   const updatedEvent = await EventService.updateEventById(id, req.body);
@@ -95,10 +83,7 @@ async function updateEventById(
     res.status(500).send(err);
   }
 }
-async function deleteEventById(
-  req: express.Request,
-  res: express.Response
-): Promise<Event[]> {
+async function deleteEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering DELETE BY ID CONTROLLER - events/:id endpoint.`);
   try {
     const id = req.params.id;

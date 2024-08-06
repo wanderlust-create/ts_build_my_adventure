@@ -10,23 +10,23 @@ export default {
   deleteCityById,
 };
 
-function listAllCities(): Promise<City[]> {
-  logger.debug(`Entering GET All SERVICES - cities/ endpoint.`);
+function listAllCities() {
+  logger.debug(`Entering GET All SERVICE - cities/ endpoint.`);
   return CityDao.listAllCities();
 }
-function getCityById(cityId: string): Promise<City> {
-  logger.debug(`Entering GET BY ID SERVICES - cities/:id endpoint ${cityId}.`);
+function getCityById(cityId: string) {
+  logger.debug(`Entering GET BY ID SERVICE - cities/:id endpoint ${cityId}.`);
   return CityDao.getCityById(cityId);
 }
-function createCity(cityData: City): Promise<City> {
-  logger.debug(`Entering CREATE SERVICES - cities/ endpoint ${cityData}`);
+function createCity(cityData: City) {
+  logger.debug(`Entering CREATE SERVICE - cities/ endpoint ${cityData}`);
   return CityDao.createCity(cityData);
 }
-function updateCityById(cityId: string, cityData: City): Promise<City[]> {
-  logger.debug(`Entering UPDATE BY ID SERVICES - cities/:id ${cityData}`);
+function updateCityById(cityId: string, cityData: City) {
+  logger.debug(`Entering UPDATE BY ID SERVICE - cities/:id ${cityData}`);
   return CityDao.updateCityById(cityId, cityData);
 }
-function deleteCityById(cityId: string): Promise<City[]> {
-  logger.debug(`Entering DELETE BY ID SERVICES - cities/:id`);
+function deleteCityById(cityId: string) {
+  logger.debug(`Entering DELETE BY ID SERVICE - cities/:id`);
   return CityDao.deleteCityById(cityId);
 }

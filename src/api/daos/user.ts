@@ -9,21 +9,21 @@ export default {
   deleteUserById,
 };
 
-async function listAllUsers(): Promise<User[]> {
+async function listAllUsers() {
   logger.debug(`Entering GET ALL DAO- users/ endpoint.`);
   return User.query()
     .column("id", "firstName", "lastName", "email")
     .orderBy("created_at", "desc")
     .withGraphFetched("city");
 }
-async function getUserById(userId: string): Promise<User> {
+async function getUserById(userId: string) {
   logger.debug(`Entering GET BY ID DAO- users/:id endpoint ${userId}`);
   return User.query()
     .findById(userId)
     .column("id", "firstName", "lastName", "email")
     .withGraphFetched("city");
 }
-async function createUser(userData: User): Promise<User> {
+async function createUser(userData: User) {
   logger.debug(`Entering CREATE DAO- users/ endpoint ${userData}`);
   const newUser = await User.query().insert({
     firstName: userData.firstName,
@@ -32,7 +32,7 @@ async function createUser(userData: User): Promise<User> {
   });
   return newUser;
 }
-async function updateUserById(userId: string, userData: User): Promise<User[]> {
+async function updateUserById(userId: string, userData: User) {
   logger.debug(`Entering UPDATE BY ID DAO- users/:id endpoint ${userData}`);
   const updatedUser = await User.query()
     .findById(userId)
@@ -44,7 +44,7 @@ async function updateUserById(userId: string, userData: User): Promise<User[]> {
     .returning("*");
   return updatedUser;
 }
-async function deleteUserById(userId: string): Promise<User[]> {
+async function deleteUserById(userId: string) {
   logger.debug(`Entering DELETE BY ID DAO- users/:id endpoint ${userId}`);
   const deletedUser = await User.query()
     .delete()
