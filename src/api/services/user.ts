@@ -10,23 +10,23 @@ export default {
   deleteUserById,
 };
 
-function listAllUsers(): Promise<User[]> {
-  logger.debug(`Entering GET All SERVICES - users/ endpoint.`);
+function listAllUsers() {
+  logger.debug(`Entering GET All SERVICE - users/ endpoint.`);
   return UserDao.listAllUsers();
 }
-function getUserById(userId: string): Promise<User> {
-  logger.debug(`Entering GET BY ID SERVICES - users/:id endpoint ${userId}.`);
+function getUserById(userId: string) {
+  logger.debug(`Entering GET BY ID SERVICE - users/:id endpoint ${userId}.`);
   return UserDao.getUserById(userId);
 }
-function createUser(userData: User): Promise<User> {
-  logger.debug(`Entering CREATE SERVICES - users/ endpoint ${userData}`);
+function createUser(userData: User) {
+  logger.debug(`Entering CREATE SERVICE - users/ endpoint ${userData}`);
   return UserDao.createUser(userData);
 }
-function updateUserById(userId: string, userData: User): Promise<User[]> {
-  logger.debug(`Entering UPDATE BY ID SERVICES - users/:id ${userData}`);
+function updateUserById(userId: string, userData: User) {
+  logger.debug(`Entering UPDATE BY ID SERVICE - users/:id ${userData}`);
   return UserDao.updateUserById(userId, userData);
 }
-function deleteUserById(userId: string): Promise<User[]> {
-  logger.debug(`Entering DELETE BY ID SERVICES - users/:id`);
+function deleteUserById(userId: string) {
+  logger.debug(`Entering DELETE BY ID SERVICE - users/:id`);
   return UserDao.deleteUserById(userId);
 }
