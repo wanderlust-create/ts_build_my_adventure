@@ -1,8 +1,10 @@
-import * as yup from "yup";
+import { object, string } from "yup";
 
-const eventDto = yup.object().shape({
-  cityId: yup.string().required(),
-  title: yup.string().required(),
-});
+const eventDto = {
+  data: object().shape({
+    cityId: string().required(),
+    title: string().required(),
+  }),
+};
 
 export default eventDto;
