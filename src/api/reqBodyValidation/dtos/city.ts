@@ -1,8 +1,10 @@
-import * as yup from "yup";
+import { object, string } from "yup";
 
-const cityDto = yup.object().shape({
-  name: yup.string().trim().required(),
-  country: yup.string().trim().required(),
-});
+const cityDto = {
+  data: object().shape({
+    name: string().trim().required(),
+    country: string().trim().required(),
+  }),
+};
 
 export default cityDto;
