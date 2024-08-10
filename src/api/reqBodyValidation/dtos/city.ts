@@ -1,10 +1,16 @@
 import { object, string } from "yup";
 
-const cityDto = {
+const cityPostDto = {
   data: object().shape({
-    name: string().trim().required(),
-    country: string().trim().required(),
+    name: string().trim().min(3).max(30).required(),
+    country: string().trim().min(3).max(30).required(),
+  }),
+};
+const cityPatchtDto = {
+  data: object().shape({
+    name: string().trim().min(3).max(30),
+    country: string().trim().min(3).max(30),
   }),
 };
 
-export default cityDto;
+export default { cityPostDto, cityPatchtDto };
