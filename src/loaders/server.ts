@@ -10,12 +10,16 @@ import api from "../api";
 // Db connection
 import connection from "../loaders/dbSetup";
 
+// error handling
+import apiErrorHandler from "../api/reqBodyValidation/error/apiErrorHandler";
+
 function createServer() {
   const app = express();
   Model.knex(connection);
   app.use(express.json());
   app.use(morgan("combined"));
   app.use("/", api);
+  app.use(apiErrorHandler)
   return app;
 }
 
