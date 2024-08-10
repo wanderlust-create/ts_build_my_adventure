@@ -11,7 +11,15 @@ export default (app: Router) => {
   app.use("/users", route);
   route.get("/", UserController.listAllUsers);
   route.get("/:id", UserController.getUserById);
-  route.post("/",validateDto(userDto.data), UserController.createUser);
-  route.patch("/:id", UserController.updateUserById);
+  route.post(
+    "/",
+    validateDto(userDto.userPostDto.data),
+    UserController.createUser
+  );
+  route.patch(
+    "/:id",
+    validateDto(userDto.userPatchDto.data),
+    UserController.updateUserById
+  );
   route.delete("/:id", UserController.deleteUserById);
 };
