@@ -1,9 +1,11 @@
-import * as yup from "yup";
+import { object, string } from "yup";
 
-const userDto = yup.object().shape({
-  firstName: yup.string().trim().required(),
-  lastName: yup.string().trim().required(),
-  email: yup.string().trim().email().required(),
-});
+const userDto = {
+  data: object().shape({
+    firstName: string().trim().required(),
+    lastName: string().trim().required(),
+    email: string().trim().email().required(),
+  }),
+};
 
 export default userDto;
