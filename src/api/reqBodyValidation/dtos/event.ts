@@ -1,10 +1,18 @@
 import { object, string } from "yup";
 
-const eventDto = {
+const eventPostDto = {
   data: object().shape({
-    cityId: string().required(),
-    title: string().required(),
+    cityId: string().min(3).max(30).required(),
+    title: string().min(3).max(30).required(),
   }),
 };
 
-export default eventDto;
+//FYI will convert req.body numbers to string
+const eventPatchDto = {
+  data: object().shape({
+    cityId: string().min(3).max(30),
+    title: string().min(3).max(30),
+  }),
+};
+
+export default { eventPostDto, eventPatchDto };
