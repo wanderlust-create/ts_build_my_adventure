@@ -11,7 +11,11 @@ export default (app: Router) => {
   app.use("/cities", route);
   route.get("/", CityController.listAllCities);
   route.get("/:id", CityController.getCityById);
-  route.post("/", validateDto(cityDto.data), CityController.createCity);
-  route.patch("/:id", CityController.updateCityById);
+  route.post("/", validateDto(cityDto.cityPostDto.data), CityController.createCity);
+  route.patch(
+    "/:id",
+    validateDto(cityDto.cityPatchtDto.data),
+    CityController.updateCityById
+  );
   route.delete("/:id", CityController.deleteCityById);
 };

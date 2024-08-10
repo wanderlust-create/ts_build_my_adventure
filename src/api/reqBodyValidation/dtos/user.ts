@@ -1,11 +1,18 @@
 import { object, string } from "yup";
 
-const userDto = {
+const userPostDto = {
   data: object().shape({
-    firstName: string().trim().required(),
-    lastName: string().trim().required(),
+    firstName: string().trim().min(3).max(30).required(),
+    lastName: string().trim().min(3).max(30).required(),
     email: string().trim().email().required(),
   }),
 };
+const userPatchDto = {
+  data: object().shape({
+    firstName: string().trim().min(3).max(30),
+    lastName: string().trim().min(3).max(30),
+    email: string().trim().email(),
+  }),
+};
 
-export default userDto;
+export default { userPostDto, userPatchDto };

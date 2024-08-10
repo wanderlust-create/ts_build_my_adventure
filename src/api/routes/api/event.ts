@@ -11,7 +11,15 @@ export default (app: Router) => {
   app.use("/events", route);
   route.get("/", EventController.listAllEvents);
   route.get("/:id", EventController.getEventById);
-  route.post("/", validateDto(eventDto.data), EventController.createEvent);
-  route.patch("/:id", EventController.updateEventById);
+  route.post(
+    "/",
+    validateDto(eventDto.eventPostDto.data),
+    EventController.createEvent
+  );
+  route.patch(
+    "/:id",
+    validateDto(eventDto.eventPatchDto.data),
+    EventController.updateEventById
+  );
   route.delete("/:id", EventController.deleteEventById);
 };
