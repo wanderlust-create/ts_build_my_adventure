@@ -1,9 +1,9 @@
 import { object, string } from "yup";
 
-const userCityDto = {
+const userCityPostDto = {
   data: object().shape({
     userId: string().required(),
     cityId: string().required(),
   }),
 };
-export default userCityDto;
+export default userCityPostDto;
