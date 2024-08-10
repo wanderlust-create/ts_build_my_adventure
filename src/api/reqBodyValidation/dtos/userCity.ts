@@ -1,8 +1,9 @@
-import * as yup from "yup";
+import { object, string } from "yup";
 
-const userCityDto = yup.object().shape({
-  userId: yup.string().required(),
-  cityId: yup.string().required(),
-});
-
+const userCityDto = {
+  data: object().shape({
+    userId: string().required(),
+    cityId: string().required(),
+  }),
+};
 export default userCityDto;
