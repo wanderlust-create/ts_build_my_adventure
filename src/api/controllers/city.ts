@@ -30,7 +30,7 @@ async function getCityById(req: express.Request, res: express.Response) {
   try {
     const city = await CityService.getCityById(req.params.id);
     if (city.statusCode != 200) {
-      res.status(city.statusCode).json({ error: city });
+      res.status(city.statusCode).json({ error: city.name });
       return;
     } else {
       res.json(city);
@@ -58,10 +58,11 @@ async function createCity(req: express.Request, res: express.Response) {
 async function updateCityById(req: express.Request, res: express.Response) {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - cities/:id endpoint.`);
   const id = req.params.id;
-  const updatedCity = await CityService.updateCityById(id, req.body);
   try {
-    if (!updatedCity) {
-      res.status(404).json({ error: "City not updated" });
+    const updatedCity = await CityService.updateCityById(id, req.body);
+    console.log(updatedCity)
+    if (updatedCity.statusCode != 200) {
+      res.status(updatedCity.statusCode).json({ error: updatedCity.name });
       return;
     } else {
       res.json(updatedCity);

@@ -2,7 +2,6 @@ import logger from "../../loaders/logger";
 import City from "../models/city";
 import { ValidationError, NotFoundError } from "objection";
 
-
 export default {
   listAllCities,
   getCityById,
@@ -25,9 +24,9 @@ async function getCityById(cityId: string) {
       .findById(cityId)
       .column("id", "name", "country")
       .withGraphFetched("event");
-      return city
+    return city;
   } catch (err) {
-    return err
+    return err;
   }
 }
 async function createCity(cityData: City) {
@@ -40,14 +39,18 @@ async function createCity(cityData: City) {
 }
 async function updateCityById(cityId: string, cityData: City) {
   logger.debug(`Entering UPDATE BY ID DAO- cities/:id endpoint ${cityData}`);
-  const updatedCity = await City.query()
-    .findById(cityId)
-    .patch({
-      name: cityData.name,
-      country: cityData.country,
-    })
-    .returning("*");
-  return updatedCity;
+  try {
+    const updatedCity = await City.query()
+      .findById(cityId)
+      .patch({
+        name: cityData.name,
+        country: cityData.country,
+      })
+      .returning("*");
+    return updatedCity;
+  } catch (err) {
+    return err;
+  }
 }
 async function deleteCityById(cityId: string) {
   logger.debug(`Entering DELETE BY ID DAO- cities/:id endpoint ${cityId}`);
