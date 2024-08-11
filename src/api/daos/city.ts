@@ -54,9 +54,13 @@ async function updateCityById(cityId: string, cityData: City) {
 }
 async function deleteCityById(cityId: string) {
   logger.debug(`Entering DELETE BY ID DAO- cities/:id endpoint ${cityId}`);
-  const deletedCity = await City.query()
-    .delete()
-    .where({ id: cityId })
-    .returning("*");
-  return deletedCity;
+  try {
+    const deletedCity = await City.query()
+      .delete()
+      .where({ id: cityId })
+      .returning("*");
+    return deletedCity;
+  } catch (err) {
+    return err;
+  }
 }

@@ -30,7 +30,7 @@ async function getCityById(req: express.Request, res: express.Response) {
   try {
     const city = await CityService.getCityById(req.params.id);
     if (city.statusCode != 200) {
-      res.status(city.statusCode).json({ error: city.name });
+      res.status(city.statusCode).json({ error: city.type });
       return;
     } else {
       res.json(city);
@@ -62,7 +62,7 @@ async function updateCityById(req: express.Request, res: express.Response) {
     const updatedCity = await CityService.updateCityById(id, req.body);
     console.log(updatedCity)
     if (updatedCity.statusCode != 200) {
-      res.status(updatedCity.statusCode).json({ error: updatedCity.name });
+      res.status(updatedCity.statusCode).json({ error: updatedCity.type });
       return;
     } else {
       res.json(updatedCity);
@@ -77,8 +77,8 @@ async function deleteCityById(req: express.Request, res: express.Response) {
   try {
     const id = req.params.id;
     const deletedCity = await CityService.deleteCityById(id);
-    if (deletedCity.length === 0) {
-      res.status(404).json({ error: "City not deleted" });
+    if (deletedCity.statusCode != 200) {
+      res.status(deletedCity.statusCode).json({ error: deletedCity.type });
       return;
     } else {
       logger.info("City Deleted:", deletedCity);
