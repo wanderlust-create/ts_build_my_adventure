@@ -20,11 +20,15 @@ class City extends Model {
     required: ["name", "country"],
     properties: {
       id: { type: "integer" },
-      name: { type: "string", minLength: 1, maxLength: 255 },
-      country: { type: "string", minLength: 1, maxLength: 255 },
+      name: { type: "string", minLength: 3, maxLength: 30 },
+      country: { type: "string", minLength: 3, maxLength: 30 },
     },
   };
 
+  // will return NotFound error instead of undefined
+  static query(...args: undefined[]) {
+    return super.query(...args).throwIfNotFound();
+  }
   static relationMappings: RelationMappings = {
     event: {
       relation: Model.HasManyRelation,
