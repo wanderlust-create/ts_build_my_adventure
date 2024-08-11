@@ -1,5 +1,7 @@
 import logger from "../../loaders/logger";
 import City from "../models/city";
+import { ValidationError, NotFoundError } from "objection";
+
 
 export default {
   listAllCities,
@@ -18,10 +20,15 @@ async function listAllCities() {
 }
 async function getCityById(cityId: string) {
   logger.debug(`Entering GET BY ID DAO- cities/:id endpoint ${cityId}`);
-  return City.query()
-    .findById(cityId)
-    .column("id", "name", "country")
-    .withGraphFetched("event");
+  try {
+    const city = await City.query()
+      .findById(cityId)
+      .column("id", "name", "country")
+      .withGraphFetched("event");
+      return city
+  } catch (err) {
+    return err
+  }
 }
 async function createCity(cityData: City) {
   logger.debug(`Entering CREATE DAO- cities/ endpoint ${cityData}`);

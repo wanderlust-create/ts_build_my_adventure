@@ -27,10 +27,10 @@ async function listAllCities(req: express.Request, res: express.Response) {
 }
 async function getCityById(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET BY ID CONTROLLER - cities/:id endpoint.`);
-  const city = await CityService.getCityById(req.params.id);
   try {
-    if (city === undefined) {
-      res.status(404).json({ error: "No city found" });
+    const city = await CityService.getCityById(req.params.id);
+    if (city.statusCode != 200) {
+      res.status(city.statusCode).json({ error: city });
       return;
     } else {
       res.json(city);
@@ -42,9 +42,9 @@ async function getCityById(req: express.Request, res: express.Response) {
 }
 async function createCity(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - cities/ endpoint.`);
-  const newCity = await CityService.createCity(req.body);
   try {
-    if (newCity === undefined) {
+    const newCity = await CityService.createCity(req.body);
+    if (!newCity) {
       res.status(404).json({ error: "City not created" });
       return;
     } else {
