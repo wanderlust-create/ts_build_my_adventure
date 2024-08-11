@@ -12,10 +12,15 @@ export default {
 
 async function listAllCities() {
   logger.debug(`Entering GET ALL DAO- cities/ endpoint.`);
-  return City.query()
-    .column("id", "name", "country")
-    .orderBy("created_at", "desc")
-    .withGraphFetched("event");
+  try {
+    const cities = await City.query()
+      .column("id", "name", "country")
+      .orderBy("created_at", "desc")
+      .withGraphFetched("event");
+    return cities;
+  } catch (err) {
+    return err;
+  }
 }
 async function getCityById(cityId: string) {
   logger.debug(`Entering GET BY ID DAO- cities/:id endpoint ${cityId}`);
@@ -31,11 +36,15 @@ async function getCityById(cityId: string) {
 }
 async function createCity(cityData: City) {
   logger.debug(`Entering CREATE DAO- cities/ endpoint ${cityData}`);
-  const newCity = await City.query().insert({
-    name: cityData.name,
-    country: cityData.country,
-  });
-  return newCity;
+  try {
+    const newCity = await City.query().insert({
+      name: cityData.name,
+      country: cityData.country,
+    });
+    return newCity;
+  } catch (err) {
+    return err;
+  }
 }
 async function updateCityById(cityId: string, cityData: City) {
   logger.debug(`Entering UPDATE BY ID DAO- cities/:id endpoint ${cityData}`);
