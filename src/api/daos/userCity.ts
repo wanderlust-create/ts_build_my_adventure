@@ -7,7 +7,6 @@ export default {
   createUserCity,
   deleteUserCityById,
 };
-
 async function listAllUserCities() {
   logger.debug(`Entering GET ALL DAO- user-cities/ endpoint.`);
   try {
@@ -19,7 +18,6 @@ async function listAllUserCities() {
     return err;
   }
 }
-
 async function createUserCity(userCityData: UserCity) {
   logger.debug(`Entering CREATE DAO- user-cities/ endpoint ${userCityData}`);
   try {
@@ -29,7 +27,6 @@ async function createUserCity(userCityData: UserCity) {
     });
     return newUserCity;
   } catch (err) {
-    logger.debug(err instanceof ValidationError);
     return err;
   }
 }
