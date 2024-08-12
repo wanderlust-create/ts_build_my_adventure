@@ -48,15 +48,19 @@ async function createUser(userData: User) {
 }
 async function updateUserById(userId: string, userData: User) {
   logger.debug(`Entering UPDATE BY ID DAO- users/:id endpoint ${userData}`);
-  const updatedUser = await User.query()
-    .findById(userId)
-    .patch({
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      email: userData.email,
-    })
-    .returning("*");
-  return updatedUser;
+  try {
+    const updatedUser = await User.query()
+      .findById(userId)
+      .patch({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+      })
+      .returning("*");
+    return updatedUser;
+  } catch (err) {
+    return err;
+  }
 }
 async function deleteUserById(userId: string) {
   logger.debug(`Entering DELETE BY ID DAO- users/:id endpoint ${userId}`);

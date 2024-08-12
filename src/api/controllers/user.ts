@@ -57,11 +57,13 @@ async function createUser(req: express.Request, res: express.Response) {
 }
 async function updateUserById(req: express.Request, res: express.Response) {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - users/:id endpoint.`);
-  const id = req.params.id;
-  const updatedUser = await UserService.updateUserById(id, req.body);
   try {
-    if (!updatedUser) {
-      res.status(404).json({ error: "User not updated" });
+    const updatedUser = await UserService.updateUserById(
+      req.params.id,
+      req.body
+    );
+    if (updatedUser.statusCode) {
+      res.status(updatedUser.statusCode).json({ error: updatedUser.type });
       return;
     } else {
       res.json(updatedUser);
