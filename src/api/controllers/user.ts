@@ -76,10 +76,9 @@ async function updateUserById(req: express.Request, res: express.Response) {
 async function deleteUserById(req: express.Request, res: express.Response) {
   logger.debug(`Entering DELETE BY ID CONTROLLER - users/:id endpoint.`);
   try {
-    const id = req.params.id;
-    const deletedUser = await UserService.deleteUserById(id);
-    if (deletedUser.length === 0) {
-      res.status(404).json({ error: "User not deleted" });
+    const deletedUser = await UserService.deleteUserById(req.params.id);
+    if (deletedUser.statusCode) {
+      res.status(deletedUser.statusCode).json({ error: deletedUser.type });
       return;
     } else {
       logger.info("User Deleted:", deletedUser);

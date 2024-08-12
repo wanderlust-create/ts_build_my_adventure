@@ -64,9 +64,13 @@ async function updateUserById(userId: string, userData: User) {
 }
 async function deleteUserById(userId: string) {
   logger.debug(`Entering DELETE BY ID DAO- users/:id endpoint ${userId}`);
-  const deletedUser = await User.query()
-    .delete()
-    .where({ id: userId })
-    .returning("*");
-  return deletedUser;
+  try {
+    const deletedUser = await User.query()
+      .delete()
+      .where({ id: userId })
+      .returning("*");
+    return deletedUser;
+  } catch (err) {
+    return err;
+  }
 }
