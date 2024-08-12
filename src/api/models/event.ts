@@ -22,7 +22,10 @@ class Event extends Model {
       title: { type: "string", minLength: 1, maxLength: 255 },
     },
   };
-
+  // will return NotFound error instead of undefined
+  static query(...args: undefined[]) {
+    return super.query(...args).throwIfNotFound();
+  }
   static relationMappings: RelationMappings = {
     city: {
       relation: Model.BelongsToOneRelation,
