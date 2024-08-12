@@ -23,10 +23,15 @@ async function listAllUsers() {
 }
 async function getUserById(userId: string) {
   logger.debug(`Entering GET BY ID DAO- users/:id endpoint ${userId}`);
-  return User.query()
-    .findById(userId)
-    .column("id", "firstName", "lastName", "email")
-    .withGraphFetched("city");
+  try {
+    const user = await User.query()
+      .findById(userId)
+      .column("id", "firstName", "lastName", "email")
+      .withGraphFetched("city");
+    return user;
+  } catch (err) {
+    return err;
+  }
 }
 async function createUser(userData: User) {
   logger.debug(`Entering CREATE DAO- users/ endpoint ${userData}`);

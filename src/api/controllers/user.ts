@@ -27,10 +27,10 @@ async function listAllUsers(req: express.Request, res: express.Response) {
 }
 async function getUserById(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET BY ID CONTROLLER - users/:id endpoint.`);
-  const user = await UserService.getUserById(req.params.id);
   try {
-    if (user === undefined) {
-      res.status(404).json({ error: "No user found" });
+    const user = await UserService.getUserById(req.params.id);
+    if (user.statusCode) {
+      res.status(user.statusCode).json({ error: user.type });
       return;
     } else {
       res.json(user);
