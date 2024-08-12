@@ -15,7 +15,7 @@ export default {
 async function listAllEvents() {
   logger.debug(`Entering GET ALL DAO- events/ endpoint.`);
   try {
-    const events = Event.query()
+    const events = await Event.query()
       .column("id", "title")
       .orderBy("created_at", "desc")
       .withGraphFetched("city");
