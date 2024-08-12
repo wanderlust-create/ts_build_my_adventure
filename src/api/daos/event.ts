@@ -54,11 +54,11 @@ async function filterEventsByUserId(userId: string) {
 async function getEventById(eventId: string) {
   logger.debug(`Entering GET BY ID DAO- events/:id endpoint ${eventId}`);
   try {
-    const events = Event.query()
+    const event = await Event.query()
       .findById(eventId)
       .column("id", "title")
       .withGraphFetched("city");
-    return events;
+    return event;
   } catch (err) {
     return err;
   }

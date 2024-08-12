@@ -3,6 +3,7 @@ import logger from "../../loaders/logger";
 import Event from "../models/event";
 import EventService from "../services/event";
 import User from "../models/user";
+import event from "api/daos/event";
 
 export default {
   listAllEvents,
