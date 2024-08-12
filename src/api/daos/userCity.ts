@@ -29,7 +29,6 @@ async function createUserCity(userCityData: UserCity) {
     });
     return newUserCity;
   } catch (err) {
-    logger.debug(err instanceof ValidationError);
     return err;
   }
 }

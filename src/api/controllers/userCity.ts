@@ -27,12 +27,12 @@ async function createUserCity(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - user-cities/ endpoint.`);
   try {
     const newUserCity = await UserCityService.createUserCity(req.body);
-    console.log(newUserCity)
-    if (!newUserCity) {
-      res.status(404).json({ error: "UserCity not created" });
+    if (newUserCity.statusCode) {
+      res.status(newUserCity.statusCode).json({ error: newUserCity.type });
       return;
-    } else if (newUserCity.ForeignKeyViolationError) {
-      res.status(400).send(newUserCity.ForeignKeyViolationError);
+      // foreign key not found
+    } else if (newUserCity.nativeError) {
+      res.status(400).json({ error: newUserCity.nativeError.detail });
     } else {
       res.json(newUserCity);
     }
