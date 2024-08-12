@@ -11,10 +11,15 @@ export default {
 
 async function listAllUsers() {
   logger.debug(`Entering GET ALL DAO- users/ endpoint.`);
-  return User.query()
-    .column("id", "firstName", "lastName", "email")
-    .orderBy("created_at", "desc")
-    .withGraphFetched("city");
+  try {
+    const users = await User.query()
+      .column("id", "firstName", "lastName", "email")
+      .orderBy("created_at", "desc")
+      .withGraphFetched("city");
+    return users;
+  } catch (err) {
+    return err;
+  }
 }
 async function getUserById(userId: string) {
   logger.debug(`Entering GET BY ID DAO- users/:id endpoint ${userId}`);

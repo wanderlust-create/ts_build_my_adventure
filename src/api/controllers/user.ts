@@ -12,10 +12,10 @@ export default {
 };
 async function listAllUsers(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET All CONTROLLER - users/ endpoint.`);
-  const users = await UserService.listAllUsers();
   try {
-    if (!users) {
-      res.status(404).json({ error: "No users found" });
+    const users = await UserService.listAllUsers();
+    if (users.statusCode) {
+      res.status(users.statusCode).json({ error: users.type });
       return;
     } else {
       res.json(users);
