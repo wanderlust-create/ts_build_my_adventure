@@ -23,6 +23,10 @@ class User extends Model {
       email: { type: "string", minLength: 4, maxLength: 255 },
     },
   };
+  // will return NotFound error instead of undefined
+  static query(...args: undefined[]) {
+    return super.query(...args).throwIfNotFound();
+  }
   static relationMappings: RelationMappings = {
     city: {
       relation: Model.ManyToManyRelation,
