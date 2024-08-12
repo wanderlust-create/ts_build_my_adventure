@@ -11,44 +11,66 @@ export default {
 
 async function listAllUsers() {
   logger.debug(`Entering GET ALL DAO- users/ endpoint.`);
-  return User.query()
-    .column("id", "firstName", "lastName", "email")
-    .orderBy("created_at", "desc")
-    .withGraphFetched("city");
+  try {
+    const users = await User.query()
+      .column("id", "firstName", "lastName", "email")
+      .orderBy("created_at", "desc")
+      .withGraphFetched("city");
+    return users;
+  } catch (err) {
+    return err;
+  }
 }
 async function getUserById(userId: string) {
   logger.debug(`Entering GET BY ID DAO- users/:id endpoint ${userId}`);
-  return User.query()
-    .findById(userId)
-    .column("id", "firstName", "lastName", "email")
-    .withGraphFetched("city");
+  try {
+    const user = await User.query()
+      .findById(userId)
+      .column("id", "firstName", "lastName", "email")
+      .withGraphFetched("city");
+    return user;
+  } catch (err) {
+    return err;
+  }
 }
 async function createUser(userData: User) {
   logger.debug(`Entering CREATE DAO- users/ endpoint ${userData}`);
-  const newUser = await User.query().insert({
-    firstName: userData.firstName,
-    lastName: userData.lastName,
-    email: userData.email,
-  });
-  return newUser;
-}
-async function updateUserById(userId: string, userData: User) {
-  logger.debug(`Entering UPDATE BY ID DAO- users/:id endpoint ${userData}`);
-  const updatedUser = await User.query()
-    .findById(userId)
-    .patch({
+  try {
+    const newUser = await User.query().insert({
       firstName: userData.firstName,
       lastName: userData.lastName,
       email: userData.email,
-    })
-    .returning("*");
-  return updatedUser;
+    });
+    return newUser;
+  } catch (err) {
+    return err;
+  }
+}
+async function updateUserById(userId: string, userData: User) {
+  logger.debug(`Entering UPDATE BY ID DAO- users/:id endpoint ${userData}`);
+  try {
+    const updatedUser = await User.query()
+      .findById(userId)
+      .patch({
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+      })
+      .returning("*");
+    return updatedUser;
+  } catch (err) {
+    return err;
+  }
 }
 async function deleteUserById(userId: string) {
   logger.debug(`Entering DELETE BY ID DAO- users/:id endpoint ${userId}`);
-  const deletedUser = await User.query()
-    .delete()
-    .where({ id: userId })
-    .returning("*");
-  return deletedUser;
+  try {
+    const deletedUser = await User.query()
+      .delete()
+      .where({ id: userId })
+      .returning("*");
+    return deletedUser;
+  } catch (err) {
+    return err;
+  }
 }
