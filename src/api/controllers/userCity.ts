@@ -10,10 +10,10 @@ export default {
 };
 async function listAllUserCities(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET All CONTROLLER - user-cities/ endpoint.`);
-  const userCities = await UserCityService.listAllUserCities();
   try {
-    if (!userCities) {
-      res.status(404).json({ error: "No userCities found" });
+    const userCities = await UserCityService.listAllUserCities();
+    if (userCities.statusCode) {
+      res.status(userCities.statusCode).json({ error: userCities.type });
       return;
     } else {
       res.json(userCities);
@@ -25,11 +25,14 @@ async function listAllUserCities(req: express.Request, res: express.Response) {
 }
 async function createUserCity(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - user-cities/ endpoint.`);
-  const newUserCity = await UserCityService.createUserCity(req.body);
   try {
-    if (newUserCity === undefined) {
-      res.status(404).json({ error: "UserCity not created" });
+    const newUserCity = await UserCityService.createUserCity(req.body);
+    if (newUserCity.statusCode) {
+      res.status(newUserCity.statusCode).json({ error: newUserCity.type });
       return;
+      // foreign key not found
+    } else if (newUserCity.nativeError) {
+      res.status(400).json({ error: newUserCity.nativeError.detail });
     } else {
       res.json(newUserCity);
     }
@@ -43,8 +46,10 @@ async function deleteUserCityById(req: express.Request, res: express.Response) {
   try {
     const id = req.params.id;
     const deletedUserCity = await UserCityService.deleteUserCityById(id);
-    if (deletedUserCity.length === 0) {
-      res.status(404).json({ error: "UserCity not deleted" });
+    if (deletedUserCity.statusCode) {
+      res
+        .status(deletedUserCity.statusCode)
+        .json({ error: deletedUserCity.type });
       return;
     } else {
       logger.info("UserCity Deleted:", deletedUserCity);

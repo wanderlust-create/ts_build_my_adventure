@@ -12,10 +12,10 @@ export default {
 
 async function listAllCities(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET All CONTROLLER - cities/ endpoint.`);
-  const cities = await CityService.listAllCities();
   try {
-    if (!cities) {
-      res.status(404).json({ error: "No cities found" });
+    const cities = await CityService.listAllCities();
+    if (cities.statusCode) {
+      res.status(cities.statusCode).json({ error: cities.type });
       return;
     } else {
       res.json(cities);
@@ -27,10 +27,10 @@ async function listAllCities(req: express.Request, res: express.Response) {
 }
 async function getCityById(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET BY ID CONTROLLER - cities/:id endpoint.`);
-  const city = await CityService.getCityById(req.params.id);
   try {
-    if (city === undefined) {
-      res.status(404).json({ error: "No city found" });
+    const city = await CityService.getCityById(req.params.id);
+    if (city.statusCode) {
+      res.status(city.statusCode).json({ error: city.type });
       return;
     } else {
       res.json(city);
@@ -42,10 +42,10 @@ async function getCityById(req: express.Request, res: express.Response) {
 }
 async function createCity(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - cities/ endpoint.`);
-  const newCity = await CityService.createCity(req.body);
   try {
-    if (newCity === undefined) {
-      res.status(404).json({ error: "City not created" });
+    const newCity = await CityService.createCity(req.body);
+    if (newCity.statusCode) {
+      res.status(newCity.statusCode).json({ error: newCity.type });
       return;
     } else {
       res.json(newCity);
@@ -57,11 +57,13 @@ async function createCity(req: express.Request, res: express.Response) {
 }
 async function updateCityById(req: express.Request, res: express.Response) {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - cities/:id endpoint.`);
-  const id = req.params.id;
-  const updatedCity = await CityService.updateCityById(id, req.body);
   try {
-    if (!updatedCity) {
-      res.status(404).json({ error: "City not updated" });
+    const updatedCity = await CityService.updateCityById(
+      req.params.id,
+      req.body
+    );
+    if (updatedCity.statusCode) {
+      res.status(updatedCity.statusCode).json({ error: updatedCity.type });
       return;
     } else {
       res.json(updatedCity);
@@ -74,10 +76,9 @@ async function updateCityById(req: express.Request, res: express.Response) {
 async function deleteCityById(req: express.Request, res: express.Response) {
   logger.debug(`Entering DELETE BY ID CONTROLLER - cities/:id endpoint.`);
   try {
-    const id = req.params.id;
-    const deletedCity = await CityService.deleteCityById(id);
-    if (deletedCity.length === 0) {
-      res.status(404).json({ error: "City not deleted" });
+    const deletedCity = await CityService.deleteCityById(req.params.id);
+    if (deletedCity.statusCode) {
+      res.status(deletedCity.statusCode).json({ error: deletedCity.type });
       return;
     } else {
       logger.info("City Deleted:", deletedCity);
