@@ -3,6 +3,7 @@ import logger from "../../loaders/logger";
 import Event from "../models/event";
 import EventService from "../services/event";
 import User from "../models/user";
+import event from "api/daos/event";
 
 export default {
   listAllEvents,
@@ -39,10 +40,10 @@ async function listAllEvents(req: express.Request, res: express.Response) {
 }
 async function getEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET BY ID CONTROLLER - events/:id endpoint.`);
-  const event = await EventService.getEventById(req.params.id);
   try {
-    if (event === undefined) {
-      res.status(404).json({ error: "No event found" });
+    const event = await EventService.getEventById(req.params.id);
+    if (event.statusCode) {
+      res.status(event.statusCode).json({ error: event.type });
       return;
     } else {
       res.json(event);
@@ -54,11 +55,14 @@ async function getEventById(req: express.Request, res: express.Response) {
 }
 async function createEvent(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - events/ endpoint.`);
-  const newEvent = await EventService.createEvent(req.body);
   try {
-    if (newEvent === undefined) {
-      res.status(404).json({ error: "Event not created" });
+    const newEvent = await EventService.createEvent(req.body);
+    if (newEvent.statusCode) {
+      res.status(newEvent.statusCode).json({ error: newEvent.type });
       return;
+      // foreign key not found
+    } else if (newEvent.nativeError) {
+      res.status(400).json({ error: newEvent.nativeError.detail });
     } else {
       res.json(newEvent);
     }
@@ -69,11 +73,13 @@ async function createEvent(req: express.Request, res: express.Response) {
 }
 async function updateEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - events/:id endpoint.`);
-  const id = req.params.id;
-  const updatedEvent = await EventService.updateEventById(id, req.body);
   try {
-    if (!updatedEvent) {
-      res.status(404).json({ error: "Event not updated" });
+    const updatedEvent = await EventService.updateEventById(
+      req.params.id,
+      req.body
+    );
+    if (updatedEvent.statusCode) {
+      res.status(updatedEvent.statusCode).json({ error: updatedEvent.type });
       return;
     } else {
       res.json(updatedEvent);
@@ -86,10 +92,9 @@ async function updateEventById(req: express.Request, res: express.Response) {
 async function deleteEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering DELETE BY ID CONTROLLER - events/:id endpoint.`);
   try {
-    const id = req.params.id;
-    const deletedEvent = await EventService.deleteEventById(id);
-    if (deletedEvent.length === 0) {
-      res.status(404).json({ error: "Event not deleted" });
+    const deletedEvent = await EventService.deleteEventById(req.params.id);
+    if (deletedEvent.statusCode) {
+      res.status(deletedEvent.statusCode).json({ error: deletedEvent.type });
       return;
     } else {
       logger.info("Event Deleted:", deletedEvent);
