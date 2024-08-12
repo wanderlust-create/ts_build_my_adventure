@@ -92,10 +92,9 @@ async function updateEventById(req: express.Request, res: express.Response) {
 async function deleteEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering DELETE BY ID CONTROLLER - events/:id endpoint.`);
   try {
-    const id = req.params.id;
-    const deletedEvent = await EventService.deleteEventById(id);
-    if (deletedEvent.length === 0) {
-      res.status(404).json({ error: "Event not deleted" });
+    const deletedEvent = await EventService.deleteEventById(req.params.id);
+    if (deletedEvent.statusCode) {
+      res.status(deletedEvent.statusCode).json({ error: deletedEvent.type });
       return;
     } else {
       logger.info("Event Deleted:", deletedEvent);
