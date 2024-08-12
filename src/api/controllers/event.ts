@@ -39,10 +39,10 @@ async function listAllEvents(req: express.Request, res: express.Response) {
 }
 async function getEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET BY ID CONTROLLER - events/:id endpoint.`);
-  const event = await EventService.getEventById(req.params.id);
   try {
-    if (event === undefined) {
-      res.status(404).json({ error: "No event found" });
+    const event = await EventService.getEventById(req.params.id);
+    if (event.statusCode) {
+      res.status(event.statusCode).json({ error: event.type });
       return;
     } else {
       res.json(event);
