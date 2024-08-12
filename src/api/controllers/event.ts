@@ -73,11 +73,13 @@ async function createEvent(req: express.Request, res: express.Response) {
 }
 async function updateEventById(req: express.Request, res: express.Response) {
   logger.debug(`Entering UPDATE BY ID CONTROLLER - events/:id endpoint.`);
-  const id = req.params.id;
-  const updatedEvent = await EventService.updateEventById(id, req.body);
   try {
-    if (!updatedEvent) {
-      res.status(404).json({ error: "Event not updated" });
+    const updatedEvent = await EventService.updateEventById(
+      req.params.id,
+      req.body
+    );
+    if (updatedEvent.statusCode) {
+      res.status(updatedEvent.statusCode).json({ error: updatedEvent.type });
       return;
     } else {
       res.json(updatedEvent);
