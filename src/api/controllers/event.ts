@@ -16,7 +16,7 @@ export default {
 async function listAllEvents(req: express.Request, res: express.Response) {
   logger.debug(`Entering GET All CONTROLLER - events/ endpoint.`);
   type ReturnValue = User | Event[];
-  let events: ReturnValue = [];
+  let events: ReturnValue[]
   if (req.query.cityId) {
     let cityId = req.query.cityId as string;
     events = await EventService.filterEventsByCityId(cityId);
@@ -27,7 +27,7 @@ async function listAllEvents(req: express.Request, res: express.Response) {
     events = await EventService.listAllEvents();
   }
   try {
-    if (!events) {
+    if (events[0] === undefined){
       res.status(404).json({ error: `No events found` });
       return;
     } else {
