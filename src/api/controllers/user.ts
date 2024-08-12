@@ -42,10 +42,10 @@ async function getUserById(req: express.Request, res: express.Response) {
 }
 async function createUser(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - users/ endpoint.`);
-  const newUser = await UserService.createUser(req.body);
   try {
-    if (newUser === undefined) {
-      res.status(404).json({ error: "User not created" });
+    const newUser = await UserService.createUser(req.body);
+    if (newUser.statusCode) {
+      res.status(newUser.statusCode).json({ error: newUser.type });
       return;
     } else {
       res.json(newUser);

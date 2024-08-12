@@ -35,12 +35,16 @@ async function getUserById(userId: string) {
 }
 async function createUser(userData: User) {
   logger.debug(`Entering CREATE DAO- users/ endpoint ${userData}`);
-  const newUser = await User.query().insert({
-    firstName: userData.firstName,
-    lastName: userData.lastName,
-    email: userData.email,
-  });
-  return newUser;
+  try {
+    const newUser = await User.query().insert({
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+    });
+    return newUser;
+  } catch (err) {
+    return err;
+  }
 }
 async function updateUserById(userId: string, userData: User) {
   logger.debug(`Entering UPDATE BY ID DAO- users/:id endpoint ${userData}`);
