@@ -55,11 +55,14 @@ async function getEventById(req: express.Request, res: express.Response) {
 }
 async function createEvent(req: express.Request, res: express.Response) {
   logger.debug(`Entering CREATE CONTROLLER - events/ endpoint.`);
-  const newEvent = await EventService.createEvent(req.body);
   try {
-    if (newEvent === undefined) {
-      res.status(404).json({ error: "Event not created" });
+    const newEvent = await EventService.createEvent(req.body);
+    if (newEvent.statusCode) {
+      res.status(newEvent.statusCode).json({ error: newEvent.type });
       return;
+      // foreign key not found
+    } else if (newEvent.nativeError) {
+      res.status(400).json({ error: newEvent.nativeError.detail });
     } else {
       res.json(newEvent);
     }
